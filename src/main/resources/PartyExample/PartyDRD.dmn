@@ -1,0 +1,557 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" xmlns:camunda="http://camunda.org/schema/1.0/dmn" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="PartyDRD" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.6.0">
+  <decision id="dish" name="Recommended Dish">
+    <informationRequirement id="InformationRequirement_0v77w2v">
+      <requiredInput href="#InputData_1iok0or" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_16ri6rw">
+      <requiredInput href="#InputData_0kibw2h" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1exh5jk">
+      <requiredDecision href="#vegetarianGuests" />
+    </informationRequirement>
+    <decisionTable id="decisionTable_1">
+      <input id="InputClause_106h44h" label="Season" camunda:inputVariable="season">
+        <inputExpression id="LiteralExpression_0qw158k" typeRef="string" expressionLanguage="feel">
+          <text>lower case(season)</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1cpvp5v" label="Vegetarian Guests">
+        <inputExpression id="LiteralExpression_0wbrv6k" typeRef="boolean">
+          <text>vegetarianGuests</text>
+        </inputExpression>
+      </input>
+      <output id="output_1" label="Dish" name="dish" typeRef="string" />
+      <rule id="DecisionRule_0i68vtd">
+        <inputEntry id="UnaryTests_152eg70">
+          <text>"fall"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0l5cq3v">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0ryj0w5" expressionLanguage="juel">
+          <text>"Stew"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1carr11">
+        <description></description>
+        <inputEntry id="UnaryTests_1p75in6">
+          <text>"winter"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0f0r0cf">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1w0l9cp">
+          <text>"Roasted Duck"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_10ewhfh">
+        <description></description>
+        <inputEntry id="UnaryTests_0vkxjer">
+          <text>"spring"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0fgakig">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0xdy8rc">
+          <text>"Spring Rolls"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1amgdvi">
+        <inputEntry id="UnaryTests_1op3rqi">
+          <text>starts with(season, "sum")</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0a6fj8n">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1r8fmze">
+          <text>"Barbecue with steaks and Hamburgers"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0tkb9yw">
+        <inputEntry id="UnaryTests_0qo9ktt">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1r77kij">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1v66eqb">
+          <text>"Pasta Napolitana"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="neededBeverages" name="NeededBeverages">
+    <informationRequirement id="InformationRequirement_079pg5i">
+      <requiredInput href="#InputData_15nmb1a" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0s9aovt">
+      <requiredDecision href="#dish" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1nl0wf2">
+      <requiredDecision href="#dish" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0vm910c">
+      <requiredDecision href="#womenOnBoard" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0ylk890">
+      <requiredDecision href="#menOnBoard" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_03ch9ia">
+      <requiredDecision href="#childrenOnBoard" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0b381dl" hitPolicy="COLLECT">
+      <input id="InputClause_0alrkx0" label="Dish">
+        <inputExpression id="LiteralExpression_0dpxrz4" typeRef="string">
+          <text>dish</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0keinlg" label="Children">
+        <inputExpression id="LiteralExpression_1ieq975" typeRef="boolean">
+          <text>children</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0ladz3l" label="Women">
+        <inputExpression id="LiteralExpression_0ndkexh" typeRef="boolean">
+          <text>women</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_01dnlof" label="Men">
+        <inputExpression id="LiteralExpression_09sobab" typeRef="boolean">
+          <text>men</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_0nowlar" label="Needed Beverages" name="neededBeverages" typeRef="" />
+      <rule id="DecisionRule_0bx76tf">
+        <description>for each man 4 bottles of beer</description>
+        <inputEntry id="UnaryTests_1ekdevl">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1piv6iz">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1mwyvnh">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1g5uiwt">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1a6r4h2">
+          <text>{"name": "Beer", "amount": count(guests[gender = "male"][age &gt;= 18]) * 4}</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1yhfp9z">
+        <description>for every woman 1/2 bottle of wine</description>
+        <inputEntry id="UnaryTests_0rbwt5d">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1hwvgwt">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1cjabpr">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_04bvezb">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_047judd">
+          <text>{"name": "Red Wine", "amount": ceiling(count(guests[gender = "female"][age &gt;= 18]) / 2)}</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0gnbf5z">
+        <description>all children and women get one lemonade</description>
+        <inputEntry id="UnaryTests_0lbo2id">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1sugjhg">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1nsdti0">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1hjtkpj">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_02tz21s">
+          <text>{"name": "Lemonade", "amount": count(guests[gender = "female"][age &gt;= 18]) + count(guests[age &lt; 18])}</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0nyrwhc">
+        <description>each adult gets one bottle extra</description>
+        <inputEntry id="UnaryTests_0sn63ql">
+          <text>contains(lower case(dish), "steak")</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_19yrhxa">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_099hf36">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1li7ubq">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_14npeb7">
+          <text>{"name": "Hefeweizen", "amount": count(guests[age &gt;= 18]) * 1}</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_11x8zws">
+        <inputEntry id="UnaryTests_07iht9a">
+          <text>contains(lower case(dish), "pasta")</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1uat6r2">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0v0cxn2">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0dcpmyf">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0igkkzf">
+          <text>{"name": "Pinot Grigio", "amount": ceiling(count(guests[age &gt;= 18]) / 3)}</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_16qrq7m">
+        <description>calculate 2 bottles of water for each guest</description>
+        <inputEntry id="UnaryTests_1qiaz4g">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0lgnflk">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1etu16m">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0jk48uz">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0xpda0h">
+          <text>{"name": "Sparkling Water", "amount": count(guests)*2}</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData id="InputData_15nmb1a" name="Guests" />
+  <inputData id="InputData_1iok0or" name="Season" />
+  <decision id="beveragesToBuy" name="Amount of beverages to buy">
+    <informationRequirement id="InformationRequirement_0ifbcly">
+      <requiredInput href="#InputData_0482t1g" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1wf9knd">
+      <requiredInput href="#InputData_1blrir0" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0p034zv">
+      <requiredInput href="#InputData_0v79xd4" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0nn9hvc">
+      <requiredInput href="#InputData_0w2qhwl" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0tqs514">
+      <requiredDecision href="#neededBeverages" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1aiiqwl">
+      <requiredInput href="#InputData_17quygf" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0gqcu84" hitPolicy="COLLECT">
+      <input id="InputClause_0f1opq2" label="Available Beer" biodi:width="246">
+        <inputExpression id="LiteralExpression_0m8ft3z" typeRef="integer">
+          <text>availableBeer</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0bhk7k7" label="Available Wine" biodi:width="388">
+        <inputExpression id="LiteralExpression_0ppjlv4" typeRef="integer">
+          <text>availableWine</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1a5li5z" label="Available Lemonade" biodi:width="150">
+        <inputExpression id="LiteralExpression_1s06i7q" typeRef="integer">
+          <text>availableLemonade</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0wko0fx" label="Available Hefeweizen" biodi:width="150">
+        <inputExpression id="LiteralExpression_14rduc7" typeRef="integer">
+          <text>availableHefeweizen</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1ka1llz" label="Available White Wine" biodi:width="336">
+        <inputExpression id="LiteralExpression_16ihvj3" typeRef="integer">
+          <text>availablePinotGrigio</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_0um9gbc" label="Beverages to buy" name="beverage" typeRef="" biodi:width="390" />
+      <rule id="DecisionRule_06damoj">
+        <inputEntry id="UnaryTests_1ya96a0">
+          <text>&lt; sum(neededBeverages[name="Beer"].amount)</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_01q53ts">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1vd0ily">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0eotpxj">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1bt9sl0">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_14m8wn1">
+          <text>{"name": "Beer", "amount": sum(neededBeverages[name="Beer"].amount) - availableBeer}</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_071xf52">
+        <inputEntry id="UnaryTests_0enrqsl">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_00opnno">
+          <text>&lt; sum(neededBeverages[name="Red Wine"].amount)</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1k14iwv">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0rxah05">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0bqgfal">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_12ajl50">
+          <text>{"name": "Red Wine", "amount": sum(neededBeverages[name="Red Wine"].amount) - availableWine}</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_140931n">
+        <inputEntry id="UnaryTests_0m11lh6">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1fsvtz2">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1kzju83">
+          <text>&lt; sum(neededBeverages[name="Lemonade"].amount)</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0vts7dy">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_09bn6zk">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_09o84i8">
+          <text>{"name": "Lemonade", "amount": sum(neededBeverages[name="Lemonade"].amount) - availableLemonade}</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0btljdf">
+        <inputEntry id="UnaryTests_1mvpox1">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0hsc209">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0ord867">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_18tg06h">
+          <text>&lt; sum(neededBeverages[name="Hefeweizen"].amount)</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1kjf01a">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1fjn8pd">
+          <text>{"name": "Hefeweizen", "amount": sum(neededBeverages[name="Hefeweizen"].amount) - availableHefeweizen}</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0ek6rwj">
+        <inputEntry id="UnaryTests_0g0mkk5">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_17urqc0">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0r748ua">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0ssy798">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_186rpji">
+          <text>&lt; sum(neededBeverages[name="Pinot Grigio"].amount)</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0zzxww2">
+          <text>{"name": "Pinot Grigio", "amount": sum(neededBeverages[name="Pinot Grigio"].amount) - availablePinotGrigio}</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData id="InputData_0482t1g" name="Available Beer" />
+  <inputData id="InputData_1blrir0" name="Available Wine" />
+  <inputData id="InputData_0v79xd4" name="Available Lemonade" />
+  <inputData id="InputData_0w2qhwl" name="Available Hefeweizen" />
+  <inputData id="InputData_0kibw2h" name="Season" />
+  <inputData id="InputData_0012g2s" name="guests" />
+  <decision id="menOnBoard" name="MenOnBoard">
+    <variable id="InformationItem_1gvkdbe" name="men" typeRef="boolean" />
+    <informationRequirement id="InformationRequirement_071gl4m">
+      <requiredInput href="#InputData_0012g2s" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_1287i1y" expressionLanguage="feel">
+      <text>list contains(guests[age &gt;=18].gender, "male")</text>
+    </literalExpression>
+  </decision>
+  <decision id="womenOnBoard" name="WomenOnBoard">
+    <variable id="InformationItem_1mzjdwk" name="women" typeRef="boolean" />
+    <informationRequirement id="InformationRequirement_0ncumlj">
+      <requiredInput href="#InputData_0012g2s" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_0vrk5j1" expressionLanguage="feel">
+      <text>list contains(guests[age &gt;=18].gender, "female")</text>
+    </literalExpression>
+  </decision>
+  <decision id="childrenOnBoard" name="ChildrenOnBoard">
+    <variable id="InformationItem_01n77nw" name="children" typeRef="boolean" />
+    <informationRequirement id="InformationRequirement_1tc5wrj">
+      <requiredInput href="#InputData_0012g2s" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_1g61i8r" expressionLanguage="feel">
+      <text>min(guests.age)&lt;18</text>
+    </literalExpression>
+  </decision>
+  <decision id="vegetarianGuests" name="Vegetarian Guests">
+    <variable id="InformationItem_1gssu0t" name="vegetarianGuests" typeRef="boolean" />
+    <informationRequirement id="InformationRequirement_0x3upyj">
+      <requiredInput href="#InputData_0012g2s" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_1av7wtz" expressionLanguage="feel">
+      <text>list contains(guests.vegetarian, true)</text>
+    </literalExpression>
+  </decision>
+  <inputData id="InputData_17quygf" name="Available Beverages" />
+  <textAnnotation id="TextAnnotation_0e8x2oy">
+    <text>List of Guest 
+[
+  {
+   "age": Integer,
+   "gender: "("male" | "female")
+   "vegetarian": true | false
+   },
+  ...
+]</text>
+  </textAnnotation>
+  <association id="Association_0ubabn6">
+    <sourceRef href="#TextAnnotation_0e8x2oy" />
+    <targetRef href="#InputData_0012g2s" />
+  </association>
+  <textAnnotation id="TextAnnotation_12zs3u7">
+    <text>String : ("Winter" | "Spring" | "Summer" | "Fall")</text>
+  </textAnnotation>
+  <association id="Association_0muieht">
+    <sourceRef href="#TextAnnotation_12zs3u7" />
+    <targetRef href="#InputData_0kibw2h" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="DMNDiagram_19mcqdq">
+      <dmndi:DMNShape id="DMNShape_0g3m511" dmnElementRef="dish">
+        <dc:Bounds height="80" width="180" x="270" y="447" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_041dw8b" dmnElementRef="neededBeverages">
+        <dc:Bounds height="80" width="180" x="588" y="222" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0htbd1g" dmnElementRef="beveragesToBuy">
+        <dc:Bounds height="80" width="180" x="490" y="102" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_08ay0eh" dmnElementRef="InputData_0kibw2h">
+        <dc:Bounds height="45" width="125" x="157" y="624" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1eyln8s" dmnElementRef="InputData_0012g2s">
+        <dc:Bounds height="45" width="125" x="717" y="624" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0xkhru2" dmnElementRef="menOnBoard">
+        <dc:Bounds height="80" width="180" x="690" y="447" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1jc10c7" dmnElementRef="womenOnBoard">
+        <dc:Bounds height="80" width="180" x="480" y="447" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1t3wq03" dmnElementRef="childrenOnBoard">
+        <dc:Bounds height="80" width="180" x="920" y="447" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_09yfsdg" dmnElementRef="InformationRequirement_0tqs514">
+        <di:waypoint x="678" y="222" />
+        <di:waypoint x="610" y="202" />
+        <di:waypoint x="610" y="182" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1wm6ipo" dmnElementRef="InformationRequirement_0x3upyj">
+        <di:waypoint x="717" y="647" />
+        <di:waypoint x="620" y="647" />
+        <di:waypoint x="600" y="647" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_03t5dw5" dmnElementRef="vegetarianGuests">
+        <dc:Bounds height="80" width="180" x="420" y="607" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1vfn9g4" dmnElementRef="InputData_17quygf">
+        <dc:Bounds height="45" width="125" x="415" y="249" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1bqhbkm" dmnElementRef="InformationRequirement_1aiiqwl">
+        <di:waypoint x="478" y="249" />
+        <di:waypoint x="550" y="202" />
+        <di:waypoint x="550" y="182" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0cgnk5o" dmnElementRef="TextAnnotation_0e8x2oy">
+        <dc:Bounds height="150" width="210" x="950" y="600" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0visldd" dmnElementRef="Association_0ubabn6">
+        <di:waypoint x="950" y="642" />
+        <di:waypoint x="842" y="645" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_188ppfo" dmnElementRef="TextAnnotation_12zs3u7">
+        <dc:Bounds height="29" width="300" x="130" y="695" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1f61oub" dmnElementRef="Association_0muieht">
+        <di:waypoint x="203" y="695" />
+        <di:waypoint x="212" y="669" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0giqcp0" dmnElementRef="InformationRequirement_1nl0wf2">
+        <di:waypoint x="360" y="447" />
+        <di:waypoint x="624" y="322" />
+        <di:waypoint x="624" y="302" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_14l6v59" dmnElementRef="InformationRequirement_0vm910c">
+        <di:waypoint x="570" y="447" />
+        <di:waypoint x="660" y="322" />
+        <di:waypoint x="660" y="302" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_07nb3fn" dmnElementRef="InformationRequirement_0ylk890">
+        <di:waypoint x="780" y="447" />
+        <di:waypoint x="696" y="322" />
+        <di:waypoint x="696" y="302" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0xz26ut" dmnElementRef="InformationRequirement_03ch9ia">
+        <di:waypoint x="1010" y="447" />
+        <di:waypoint x="732" y="322" />
+        <di:waypoint x="732" y="302" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1pbdlkh" dmnElementRef="InformationRequirement_16ri6rw">
+        <di:waypoint x="220" y="624" />
+        <di:waypoint x="330" y="547" />
+        <di:waypoint x="330" y="527" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1yfybge" dmnElementRef="InformationRequirement_1exh5jk">
+        <di:waypoint x="510" y="607" />
+        <di:waypoint x="390" y="547" />
+        <di:waypoint x="390" y="527" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_149co5e" dmnElementRef="InformationRequirement_0ncumlj">
+        <di:waypoint x="780" y="624" />
+        <di:waypoint x="570" y="547" />
+        <di:waypoint x="570" y="527" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0lsyohe" dmnElementRef="InformationRequirement_071gl4m">
+        <di:waypoint x="780" y="624" />
+        <di:waypoint x="780" y="547" />
+        <di:waypoint x="780" y="527" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1ebec65" dmnElementRef="InformationRequirement_1tc5wrj">
+        <di:waypoint x="780" y="624" />
+        <di:waypoint x="1010" y="547" />
+        <di:waypoint x="1010" y="527" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

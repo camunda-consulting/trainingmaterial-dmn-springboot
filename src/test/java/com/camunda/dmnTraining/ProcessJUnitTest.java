@@ -4,6 +4,7 @@ import static org.camunda.bpm.engine.test.assertions.bpmn.AbstractAssertions.*;
 import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -49,6 +50,38 @@ public class ProcessJUnitTest {
 			final Object value = result.right().get();
 			System.out.println("result is " + value);
 			org.junit.Assert.assertEquals(50.0, Double.valueOf(value.toString()).doubleValue(), 0.0);
+		} else {
+			final FeelEngine.Failure failure = result.left().get();
+			fail(failure.message());
+		}
+	}
+
+	@Test
+	public void testCompareListsWithFEELExpression() {
+		final FeelEngine engine = new FeelEngine.Builder().build();
+
+		List<String> left = new ArrayList<String>();
+		left.add("A");
+		left.add("B");
+		left.add("C");
+
+		List<String> right = new ArrayList<String>();
+		right.add("C");
+		right.add("A");
+		right.add("B");
+		// right.add("X");
+
+		final Map<String, Object> variables = withVariables(//
+				"left", left//
+				, "right", right //
+		);
+
+		final Either<FeelEngine.Failure, Object> result = engine
+				.evalExpression("every elem in right satisfies list contains(left, elem)", variables);
+
+		if (result.isRight()) {
+			final Object value = result.right().get();
+			org.junit.Assert.assertTrue((Boolean) value);
 		} else {
 			final FeelEngine.Failure failure = result.left().get();
 			fail(failure.message());
